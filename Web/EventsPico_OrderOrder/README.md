@@ -4,9 +4,9 @@
 - Sau khi login thành công ta rà soát 1 lượt các chức năng chính trong trang 
 + Dashbroad : chỉ là description rằng trang web này giúp ta quản lý tài khoản và hoạt động
 + Expense : nơi ta nhập dữ liệu chi tiêu và có thể thấy rằng front-end đã validate các giá trị đúng input
-<img 2>
+![Exploit](images/2.png)
 - Ấn generate report để sinh ra 1 bản chi tiêu như ta đã nhập thành 1 file .csv ở trang inbox
-<img 3> 
+![Exploit](images/3.png)
 - Thử download về và nó sẽ trả về data mà mình truyền vào
 - Vì lab đã mô tả “oder” cộng với dữ liệu được trả về nên ta đã nghĩ đến
   “SQL injection” nhưng “CSV injection” cũng có khả năng
@@ -17,11 +17,11 @@
 - lúc này ta dùng thử SELECT SLEEP(5) cũng không bị delay 
 - khá chắc rằng input ở 3 tham số là không có hiệu quả 
 - lúc này chú ý kỹ ở mục inbox rằng tên username được reflect lại thì
-<img 3>
+![Exploit](images/3.png)
 -  lúc này truy vấn có thể là :
 “ SELECT description,amount,date FROM somethings WHERE username=’alice’  “
 - ta thử register với username “ alice’ “ sau đó ta vẫn login được như thường và ta tạo bản ghi rồi generate để xem lại tên file 
-<img 4>
+![Exploit](images/1.png)
 - đã đúng như ta dự đoán backend lấy username để truy vấn , lúc này ta sử dụng kỹ thuật SQLi :
 -> Kiểm tra được 3 số , version “sqlite”
 -> Truy vấn tên bảng : ' UNION SELECT name,NULL,NULL FROM sqlite_master WHERE type='table'--
