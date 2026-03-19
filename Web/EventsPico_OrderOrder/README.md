@@ -1,6 +1,6 @@
 
 - Đầu tiên ta cần đăng kí để login được vào trang chính
-![Exploit](images/Screenshot 2026-03-19 111734.png)
+![Exploit](images/1.png)
 - Sau khi login thành công ta rà soát 1 lượt các chức năng chính trong trang 
 + Dashbroad : chỉ là description rằng trang web này giúp ta quản lý tài khoản và hoạt động
 + Expense : nơi ta nhập dữ liệu chi tiêu và có thể thấy rằng front-end đã validate các giá trị đúng input
