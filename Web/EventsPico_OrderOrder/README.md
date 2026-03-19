@@ -8,6 +8,7 @@
 - Ấn generate report để sinh ra 1 bản chi tiêu như ta đã nhập thành 1 file .csv ở trang inbox
 ![Exploit](images/3.png)
 - Thử download về và nó sẽ trả về data mà mình truyền vào
+![Exploit](images/4.png)
 - Vì lab đã mô tả “oder” cộng với dữ liệu được trả về nên ta đã nghĩ đến
   “SQL injection” nhưng “CSV injection” cũng có khả năng
 - write-up lab này là SQL injection nên việc thử CSV tạm bỏ qua vì ta đã thử nhiều giá trị và nó không trả về 
@@ -29,4 +30,5 @@
 -> Truy vấn giá trị : ‘ UNION SELECT name,value,null FROM aDNyM19uMF9mMTRn--
 
 ->Flag:
+![Exploit](images/6.png)
 
