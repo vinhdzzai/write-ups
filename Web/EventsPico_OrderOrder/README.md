@@ -21,7 +21,7 @@
 -  lúc này truy vấn có thể là :
 “ SELECT description,amount,date FROM somethings WHERE username=’alice’  “
 - ta thử register với username “ alice’ “ sau đó ta vẫn login được như thường và ta tạo bản ghi rồi generate để xem lại tên file 
-![Exploit](images/1.png)
+![Exploit](images/5.png)
 - đã đúng như ta dự đoán backend lấy username để truy vấn , lúc này ta sử dụng kỹ thuật SQLi :
 -> Kiểm tra được 3 số , version “sqlite”
 -> Truy vấn tên bảng : ' UNION SELECT name,NULL,NULL FROM sqlite_master WHERE type='table'--
