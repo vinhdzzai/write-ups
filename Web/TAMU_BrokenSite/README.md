@@ -22,7 +22,7 @@
 - và well kết quả là không thu thập được gì
 - đó là 1 số bước recon của tôi nhưng có vẻ khá useless 
 - quay về vấn đề chính ta đã dùng các phương thức để cố gắng connect đến server nhưng đều bị chặn (từ curl, ping, nmap,..) 
-- để ý những phương thức trên đều là dùng giao thức TCP để connect nhưng ta trong tầng giao vận ta còn giao thức UDP nữa
+- để ý những phương thức trên đều là dùng giao thức TCP để connect nhưng ta trong tầng giao vận ta còn giao thức UDP nữa . tại sao tôi lại nghĩ đến UDP vì dùng lệnh dig vẫn cho ra kết quả mà dig thì lại thường dùng UDP
 - và bản HTTP 3 dùng giao thức UDP thay vì TCP như thông thường lúc này ta xác minh xem web có dùng HTTP 3 hay không :
 - curl --http3 https://broken-website.tamuctf.cybr.club
   
