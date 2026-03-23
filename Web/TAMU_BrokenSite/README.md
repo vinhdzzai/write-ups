@@ -8,14 +8,14 @@
 + curl -I -k broken-website.tamuctf.cybr.club/
 // để bỏ qua xác thực TLS
 - .... và 1 vài lệnh tương tự nhưng cũng không có kết quả
-- lúc này ta chắc chắn HTTP request đã bị chặn nên các bước xác thực bằng header là vô dụng
+- lúc này ta chắc chắn HTTP request thông thường đã bị chặn nên các bước xác thực bằng header là vô dụng
 - tiếp theo tôi thử ping nhưng cũng bị chặn nốt
 - lúc này có thể là web chạy ở cổng khác nên tôi dùng thử nmap :
 - nmap -p- -sC -sV https://broken-website.tamuctf.cybr.club/ 
 - nhưng kết quả là zero
   
 ![Exploit](image/image3.png)
-- lúc này tôi đã nghĩ rằng trang web này đã chặn hết các request từ client hoặc không còn hoạt động và tôi đã nghĩ đến việc tìm domain/subdomain 
+- lúc này và tôi đã nghĩ đến việc tìm domain/subdomain 
 - vì là domain nên tôi nghĩ đến 1 số lỗ hổng liên quan đến nó , lệnh dig để lấy IP , 1 số bản ghi (TEXT , SOA,..) và quan trọng nhất nếu lấy được nameserver và cấu hình sai có thể dẫn đến AXFR
  
 ==))))))))
