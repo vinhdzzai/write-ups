@@ -19,7 +19,7 @@
 - vì là domain nên tôi nghĩ đến 1 số lỗ hổng liên quan đến nó , lệnh dig để lấy IP , 1 số bản ghi (TEXT , SOA,..) và quan trọng nhất nếu lấy được nameserver và cấu hình sai có thể dẫn đến AXFR
  
 ==))))))))
-- và well kết quả là không thu thập được gì
+- và well tuy cho ra kết quả nhưng cũng không thu thập được gì có ích
 - đó là 1 số bước recon của tôi nhưng có vẻ khá useless 
 - quay về vấn đề chính ta đã dùng các phương thức để cố gắng connect đến server nhưng đều bị chặn (từ curl, ping, nmap,..) 
 - để ý những phương thức trên đều là dùng giao thức TCP để connect nhưng ta trong tầng giao vận ta còn giao thức UDP nữa . tại sao tôi lại nghĩ đến UDP vì dùng lệnh dig vẫn cho ra kết quả mà dig thì lại thường dùng UDP
