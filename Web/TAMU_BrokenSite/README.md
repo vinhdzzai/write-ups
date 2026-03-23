@@ -26,7 +26,7 @@
 - well vậy là web này thực sự dùng HTTP3 (giao thức UDP) nên các bước recon trước (dùng TCP) đều fail là đúng 
 - và ta đang bị không xác thực đúng certificate do HTTP3 tích hợp TLS nên việc đổi sang cổng 80 là không thể -> ta dùng option -k để bỏ qua xác thực certificate 
 ![Exploit](image/image5.png)
--> FLAG : gigem{7h3_fu7u23_15_qu1c_64d1f5}
+- FLAG : gigem{7h3_fu7u23_15_qu1c_64d1f5}
 
 
 
