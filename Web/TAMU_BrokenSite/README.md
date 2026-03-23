@@ -23,6 +23,7 @@
 - để ý những phương thức trên đều là dùng giao thức TCP để connect nhưng ta trong tầng giao vận ta còn giao thức UDP nữa
 - và bản HTTP 3 dùng giao thức UDP thay vì TCP như thông thường lúc này ta xác minh xem web có dùng HTTP 3 hay không :
 - curl --http3 https://broken-website.tamuctf.cybr.club
+  
 ![Exploit](image/image4.png)
 - well vậy là web này thực sự dùng HTTP3 (giao thức UDP) nên các bước recon trước (dùng TCP) đều fail là đúng 
 - và ta đang bị không xác thực đúng certificate do HTTP3 tích hợp TLS nên việc đổi sang cổng 80 là không thể -> ta dùng option -k để bỏ qua xác thực certificate
