@@ -17,6 +17,7 @@
 ![Exploit](image/image3.png)
 - lúc này tôi đã nghĩ rằng trang web này đã chặn hết các request từ client hoặc không còn hoạt động và tôi đã nghĩ đến việc tìm domain/subdomain 
 - vì là domain nên tôi nghĩ đến 1 số lỗ hổng liên quan đến nó , lệnh dig để lấy IP , 1 số bản ghi (TEXT , SOA,..) và quan trọng nhất nếu lấy được nameserver và cấu hình sai có thể dẫn đến AXFR
+ 
  ![Exploit](images/imageNULL.jpg)
 - và well kết quả là không thu thập được gì
 - đó là 1 số bước recon của tôi nhưng có vẻ khá useless 
