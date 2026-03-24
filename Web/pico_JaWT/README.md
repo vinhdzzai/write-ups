@@ -1,4 +1,4 @@
-![Exploit](images/image1.png)
+lab : https://play.picoctf.org/practice?category=1&page=6
 - như tiêu đề là JWT thì việc trước hết nên làm là kiểm tra cookie
 - tôi thử nhập để register với  1 username  “genz”
 ![Exploit](images/image2.png)
@@ -11,8 +11,8 @@ signature = HMAC_SHA256(
     base64url(header) + "." + base64url(payload)
 )
 - lúc này tôi có 2 hướng giải 
-+ dùng tool để crack ra secret_key (như trong bài đã hint) 
-+ thay đổi thuật toán về ‘none’ để không phải dùng đến secret_key nữa
++ -> dùng tool để crack ra secret_key (như trong bài đã hint) 
++ -> thay đổi thuật toán về ‘none’ để không phải dùng đến secret_key nữa
 
 - trước hết ta thử thay đổi thuật toán alg : “none” và user : “admin” sau đó thay đổi cookie và reload trang
 ![Exploit](images/image4.png)
