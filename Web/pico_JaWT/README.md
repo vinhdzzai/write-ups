@@ -15,10 +15,10 @@ signature = HMAC_SHA256(
 + -> thay đổi thuật toán về ‘none’ để không phải dùng đến secret_key nữa
 
 - trước hết ta thử thay đổi thuật toán alg : “none” và user : “admin” sau đó thay đổi cookie và reload trang
-![Exploit](images/image4.png)
+![Exploit](images/image5.png)
 - trang báo lỗi do ta đang chọn thuật tóan là none nhưng server đang lấy cookie và decode với secret_key = “ilovepico” mà đã có secret_key thì phải có thuật toán nên 2 thứ này đang lệch nhau -> xảy ra lỗi
 - dù sao thì may mắn đã biết được secret nên tôi decode lại để lấy cookie của admin 
-![Exploit](images/image5.png)
+![Exploit](images/image6.png)
 - sau đó chỉ việc thay cookie thôi
 FLAG : picoCTF{jawt_was_just_what_you_thought_bbb82bd4a57564aefb32d69dafb60583}
 - còn cách thứ 2 tôi vẫn brute-force ra secret với tool jack_the_ripper nhưng có vẻ lâu hơn
