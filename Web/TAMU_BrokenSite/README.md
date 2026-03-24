@@ -10,19 +10,19 @@
 - .... và 1 vài lệnh tương tự nhưng cũng không có kết quả
 - lúc này ta chắc chắn HTTP request thông thường đã bị chặn nên các bước xác thực bằng header là vô dụng
 - tiếp theo tôi thử ping nhưng cũng bị chặn nốt nên cũng k thể suy ra web có chết hay kh
-- lúc này có thể là web chạy ở cổng khác nên tôi dùng thử nmap :
+- lúc này có thể là server chạy ở cổng khác nên tôi dùng thử nmap :
 - nmap -p- -sC -sV https://broken-website.tamuctf.cybr.club/
 
 ![Exploit](image/image3.png)
-- nhưng kết quả là cho thấy không cổng nào open -> web chặn đa số TCP
+- nhưng kết quả là cho thấy không cổng nào open -> server có lẽ đã filter đa số TCP
 - lúc này và tôi đã nghĩ đến việc tìm domain/subdomain 
-- vì là domain nên tôi nghĩ đến 1 số lỗ hổng liên quan đến nó , lệnh dig để lấy IP , 1 số bản ghi (TEXT , SOA,..) và quan trọng nhất nếu lấy được nameserver và cấu hình sai có thể dẫn đến AXFR
+- lệnh dig sẽ trả về một số thông tin hữu ích như IP, bản ghi(TEXT, SOA,..), nameserver,....
  
 ==))))))))
 - và well tuy cho ra kết quả nhưng cũng không thu thập được gì có ích
 - đó là 1 số bước recon của tôi nhưng có vẻ khá useless 
 - quay về vấn đề chính ta đã dùng các phương thức để cố gắng connect đến server nhưng đều bị chặn (từ curl, nmap,..) 
-- để ý những phương thức trên đều là dùng giao thức TCP để connect nhưng ta trong tầng giao vận ta còn giao thức UDP nữa . tại sao tôi lại nghĩ đến UDP vì trước đó đã nmap, curl đã cho thấy tầng application filter hầu hết mọi TCP hoặc có thể không hoạt động đúng cách
+- để ý những phương thức trên đều là dùng giao thức TCP để connect nhưng ta trong tầng giao vận ta còn giao thức UDP nữa . tại sao tôi lại nghĩ đến UDP vì trước đó đã nmap, curl đã cho thấy server filter hầu hết mọi TCP hoặc có thể không hoạt động đúng cách
 - và bản HTTP 3 dùng giao thức UDP thay vì TCP như thông thường lúc này ta xác minh xem web có dùng HTTP 3 hay không :
 - curl --http3 https://broken-website.tamuctf.cybr.club
   
