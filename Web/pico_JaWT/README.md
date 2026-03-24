@@ -10,13 +10,13 @@ signature = HMAC_SHA256(
     secret_key,
     base64url(header) + "." + base64url(payload)
 )
-- lúc này tôi có 2 hướng giải 
+- lúc này tôi có 2 hướng giải :
 + -> dùng tool để crack ra secret_key (như trong bài đã hint) 
 + -> thay đổi thuật toán về ‘none’ để không phải dùng đến secret_key nữa
 
 - cách thứ 1 , trước hết ta thử thay đổi thuật toán alg : “none” và user : “admin” sau đó thay đổi cookie và reload trang
 ![Exploit](images/image5.png)
-- trang báo lỗi do ta đang chọn thuật tóan là none nhưng server đang lấy secret_key để decode với cookie mà đã có secret_key thì phải có thuật toán nên 2 thứ này đang lệch nhau -> xảy ra lỗi
+- trang báo lỗi do ta đang chọn thuật tóan là none nhưng server đang lấy secret_key "ilovepico" để decode với cookie mà đã có secret_key thì phải có thuật toán nên 2 thứ này đang lệch nhau -> xảy ra lỗi
 - dù sao thì may mắn đã biết được secret nên tôi encode với secret_key để lấy cookie của admin 
 ![Exploit](images/image6.png)
 - sau đó chỉ việc thay cookie thôi
