@@ -18,16 +18,18 @@
 - lúc này và tôi đã nghĩ đến việc tìm domain/subdomain 
 - lệnh dig sẽ trả về một số thông tin hữu ích như IP, bản ghi(TEXT, SOA,..), nameserver,....
  
-==))))))))
+.......
 - và well tuy cho ra kết quả nhưng cũng không thu thập được gì có ích
-- đó là 1 số bước recon của tôi nhưng có vẻ khá useless 
+- đó là 1 số bước recon của tôi nhưng chưa thu thập được gì hữu dụng
 - quay về vấn đề chính ta đã dùng các phương thức để cố gắng connect đến server nhưng đều bị chặn (từ curl, nmap,..) 
-- để ý những phương thức trên đều là dùng giao thức TCP để connect nhưng ta trong tầng giao vận ta còn giao thức UDP nữa . tại sao tôi lại nghĩ đến UDP vì trước đó đã nmap, curl đã cho thấy server filter hầu hết mọi TCP hoặc có thể không hoạt động đúng cách
-- và bản HTTP 3 dùng giao thức UDP thay vì TCP như thông thường lúc này ta xác minh xem web có dùng HTTP 3 hay không :
+- để ý những phương thức trên đều là dùng giao thức TCP để connect nhưng ta trong tầng giao vận ta còn giao thức UDP nữa .
+- và lúc này tôi đặt ra giả thuyết rằng có thể server không hoạt động trên giao thức TCP , trước đó đã thử nmap, curl đã cho thấy server filter/not serving hầu hết mọi TCP hoặc có thể không hoạt động đúng cách và dùng lệnh dig (UDP) thì lại được
+- và bản HTTP 3 dùng giao thức UDP thay vì TCP như thông thường, lúc này ta xác minh xem web có dùng HTTP 3 hay không :
 - curl --http3 https://broken-website.tamuctf.cybr.club
   
 ![Exploit](image/image4.png)
-- well vậy là web này thực sự dùng HTTP3 (giao thức UDP) nên các bước recon trước (dùng TCP cho web) đều fail là đúng và TCP access tới dịch vụ web bị chặn 
+- well vậy là web này thực sự dùng HTTP3 (giao thức UDP) nên các bước recon trước (dùng TCP cho web) đều fail là đúng và TCP access tới dịch vụ web bị chặn
+-  ta cần hiểu rằng browser sẽ tự động thử bản http 1.1 và http 2 cho trình duyệt người dùng nhưng khi server dùng http 3 mà không hint cho browser biết thì browser sẽ không truy cập được và đó là lý do vì sao ta ép dùng http3 thì lại truy cập được 
 - và ta đang bị không xác thực đúng certification do HTTP3 tích hợp TLS  -> ta dùng option -k để bỏ qua certificate
    
 ![Exploit](image/image5.png)
