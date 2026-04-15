@@ -5,8 +5,7 @@ https://play.picoctf.org/practice/challenge/108?category=1&difficulty=2&page=4
 ![Exploit](image/image2.png)
 - vậy là thực sự đoạn input này được đưa vào truy vấn (có cả username=’bob’) lúc này tôi thử dùng ordery by để xác định số cột trả về (‘ ORDER BY 1--)
 ![Exploit](image/image3.png)
-- dựa vào lỗi trả về ta có thể thấy Lệnh UPDATE không hỗ trợ cấu trúc ORDER BY để dò cột như SELECT 
-- như ta đã biết ORDER BY thường dùng trong SELECT nhưng trong lab này họ dùng UPDATE vậy nên ta cần chuyển sang cách khai thác khác
+- dựa vào lỗi trả về ta có thể thấy Lệnh UPDATE không hỗ trợ cấu trúc ORDER BY để dò cột như SELECT tuy vẫn có thể dùng nếu ta cấu hình đặc biệt nhưng dùng trong trường hợp này thì ORDER BY cũng kh thể exploit được như UNION SELECT vậy nên ta cần chuyển sang cách khai thác khác
 - trước hết dựa vào lỗi trả về tôi xác định được backend dùng truy vấn kiểu :
 UPDATE users 
 SET amount = '...' 
