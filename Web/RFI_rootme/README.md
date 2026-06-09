@@ -19,7 +19,7 @@ link challenge : https://www.root-me.org/en/Challenges/Web-Server/Remote-File-In
 - lúc này ta cần 1 URL chứa mã php để chạy thực thi shell , tôi recommend sử dụng github để tự tạo 1 trang php (vì tôi k biết cách khác :b)
 - vì hàm system tôi thử đã bị blacklist nên ta chọn cách khác như file_get_contents() hoặc readfile()
 ![Exploit](images/image5.png)
-- gán URL git vào input
+- gán URL git chứa mã php vào input
 ![Exploit](images/image6.png)
 
 -> FLAG : R3m0t3_iS_r3aL1y_3v1l
