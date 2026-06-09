@@ -12,8 +12,8 @@ link challenge : https://www.root-me.org/en/Challenges/Web-Server/Remote-File-In
 - ta thấy respone null byte đã cắt hậu tố nhưng không thể thực thi , có lẽ đã index.php không resolve path giống với file được include, hoặc nó null byte thực sự không hoạt động hoặc something gets wrong?
 - hàm include() ngoài file nó còn nhận 1 URL để nhận dữ liệu nếu chứa php thì thực thi còn lại trả raw data
 - lúc này tôi thử truyền 1 URL xem nó trả data không và tất nhiên dùng thêm ? để hậu tố _lang.php biến nó thành query string không làm nhiễu URL
-   
-	/?lang=http://example.com?
+  
+  -> http://example.com?_lang.php
 ![Exploit](images/image4.png)
 - sau khi decode thực sự nó đã trả về dữ liệu trang
 - lúc này ta cần 1 URL chứa mã php để chạy thực thi shell , tôi recommend sử dụng github để tự tạo 1 trang php (vì tôi k biết cách khác :b)
