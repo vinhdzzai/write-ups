@@ -22,5 +22,4 @@ link challenge : https://www.root-me.org/en/Challenges/Web-Server/Remote-File-In
 - gán URL git chứa mã php vào input
 ![Exploit](images/image6.png)
 
-//à getting hacked chứ kh có be nhé
 -> FLAG : R3m0t3_iS_r3aL1y_3v1l
