@@ -11,7 +11,7 @@ link challenge : https://www.root-me.org/en/Challenges/Web-Server/Remote-File-In
 ![Exploit](images/image3.png)
 - ta thấy respone null byte đã cắt hậu tố nhưng không thể thực thi , có lẽ đã index.php không reslove path giống với file được include, hoặc nó null byte thực sự không hoạt động hoặc something gets wrong?
 - hàm include() ngoài file nó còn nhận 1 URL để nhận dữ liệu nếu chứa php thì thực thi còn lại trả raw data
-- lúc này tôi thử truyền 1 URL xem nó trả data không và tất nhiên dùng thêm ? để hậu tố biến nó thành query string không làm nhiễu URL
+- lúc này tôi thử truyền 1 URL xem nó trả data không và tất nhiên dùng thêm ? để hậu tố _lang.php biến nó thành query string không làm nhiễu URL
    
 	/?lang=http://example.com?
 ![Exploit](images/image4.png)
