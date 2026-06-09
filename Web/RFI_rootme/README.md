@@ -6,7 +6,7 @@ link challenge : https://www.root-me.org/en/Challenges/Web-Server/Remote-File-In
 - khá chắc entry point bài này ở phần /?lang
 - thử truyền giá trị bất thường để xem respone , tôi thử truyền dấu ''
 ![Exploit](images/image2.png)
-- lỗi cho ta thấy input đang được gán trong hàm include($_GET['lang']+_lang.php)
+- lỗi cho ta thấy input đang được gán trong hàm include($_GET['lang']+_lang.php) và đang được xử lý trong file index.php
 - tôi thử dùng php://filter để đọc thử source , dùng %00 (null byte) để cắt chuỗi hậu tố _lang.php
 ![Exploit](images/image3.png)
 - ta thấy respone null byte đã cắt hậu tố nhưng không thể thực thi , có lẽ đã validate loại php wrapper hoặc something gets wrong?
