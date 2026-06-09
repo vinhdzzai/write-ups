@@ -15,7 +15,7 @@ link challenge : https://www.root-me.org/en/Challenges/Web-Server/Remote-File-In
   
   -> http://example.com?_lang.php
 ![Exploit](images/imageE.png)
-- sau khi decode thực sự nó đã trả về dữ liệu trang
+- It works !
 - lúc này ta cần 1 URL chứa mã php để chạy thực thi shell , tôi recommend sử dụng github để tự tạo 1 trang php (vì tôi k biết cách khác :b)
 - vì hàm system tôi thử đã bị blacklist nên ta chọn cách khác như file_get_contents() hoặc readfile()
 ![Exploit](images/image5.png)
