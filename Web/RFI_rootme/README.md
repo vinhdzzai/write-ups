@@ -6,12 +6,12 @@ link challenge : https://www.root-me.org/en/Challenges/Web-Server/Remote-File-In
 - khá chắc entry point bài này ở phần /?lang
 - thử truyền giá trị bất thường để xem respone , tôi thử truyền dấu ''
 ![Exploit](images/image2.png)
-- lỗi cho ta thấy input đang được gán trong hàm include($_GET['lang']+_lang.php) và đang được xử lý trong file index.php
+- lỗi cho ta thấy input đang được gán trong hàm include($_GET['lang']."lang.php") và đang được xử lý trong file index.php
 - tôi thử dùng php://filter để đọc thử source , dùng %00 (null byte) để cắt chuỗi hậu tố _lang.php
 ![Exploit](images/image3.png)
 - ta thấy respone null byte đã cắt hậu tố nhưng không thể thực thi , có lẽ đã index.php không resolve path giống với file được include, hoặc null byte thực sự không hoạt động hoặc something  wrong?
 - hàm include() ngoài file nó còn nhận 1 URL để nhận dữ liệu nếu chứa php thì thực thi còn lại trả raw data
-- lúc này tôi thử truyền 1 URL xem nó trả data không và tất nhiên dùng thêm ? để hậu tố _lang.php biến nó thành query string không làm nhiễu URL
+- lúc này tôi thử truyền 1 URL xem nó trả data không và tất nhiên dùng thêm ? để hậu tố _lang.php biến nó thành query không làm nhiễu URL
   
   -> http://example.com?_lang.php
 ![Exploit](images/imageE.png)
