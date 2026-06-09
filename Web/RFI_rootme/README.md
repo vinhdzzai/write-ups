@@ -1,6 +1,6 @@
 link challenge : https://www.root-me.org/en/Challenges/Web-Server/Remote-File-Inclusion
 - nhiệm vụ bài này là đọc được source 
-![Exploit](images/exploit.png)
+![Exploit](images/image1.png)
 - Web chứa 2 chức năng là chọn ngôn ngữ bằng tiếng Francais hoặc English với URL có endpoint /?lang= 
 - tôi cũng đã recon source , endpoint không phát hiện thêm gì
 - khá chắc entry point bài này ở phần /?lang
