@@ -84,6 +84,7 @@ Kịch bản mở tab Bot (pico), đổi session sang Hacker rồi chạy XSS đ
     });
 </script>
 ```
+- cài XSS ở account hacker để lấy thông tin tab "pico"
 
 ### Payload gửi trong /report
 ```html
@@ -99,6 +100,8 @@ data:text/html,
 </script>
 
 ```
+- đầu tiên mở trang /notes chứa flag và gán tên tab là "pico"
+- sau đó ở tab ban đầu login vào account hacker và đi đến /notes để gặp payload XSS
 ![Exploit](images/image6.png)
 
 ## 5.Flag
