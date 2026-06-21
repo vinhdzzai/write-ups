@@ -1,3 +1,5 @@
+
+# Write-up: PicoCTF - Web Challenge (SQL injection)
 https://play.picoctf.org/practice/challenge/108?category=1&difficulty=2&page=4
 - sau khi đăng kí (bob:1234) và đăng nhập dẫn ta đến 1 trang donate tiền cho company của họ
 ![Exploit](image/image1.png)
