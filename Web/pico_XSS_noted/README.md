@@ -1,4 +1,4 @@
-# Write-up: PicoCTF - Web Challenge (XSS Session Swapping)
+# Write-up: PicoCTF - Web Challenge (XSS-reflected Session Swapping)
 
 ## 1. Tổng quan Challenge
 Ứng dụng web có 2 chức năng chính:
