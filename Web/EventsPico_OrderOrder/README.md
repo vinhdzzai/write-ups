@@ -12,7 +12,7 @@
 ![Exploit](images/4.png)
 - Vì lab đã mô tả “oder” cộng với dữ liệu được trả về nên ta đã nghĩ đến
   “SQL injection” nhưng “CSV injection” cũng có khả năng
-- write-up lab này là SQL injection nên việc thử CSV tạm bỏ qua vì ta đã thử nhiều giá trị và nó không trả về 
+- write-up lab này là SQL injection nên việc thử CSV tạm bỏ qua vì ta đã thử nhiều giá trị và nó không trả về thông tin gì có ích
 - tại sao tôi nghĩ đến hướng SQL injection vì sau khi ta tạo 1 bản ghi và generate nó thành 1 file và trả ra đúng 3 thông tin ứng với mỗi cột thì backend có thể truy vấn như sau :
 “ SELECT description,amount,date FROM somethings “
 - vì dữ liệu bị validate ở front-end nên ta dùng burp-suite để bypass , ta truyền thêm 1 dấu ‘ ở các giá trị để xem nó có trả về lỗi không thì đáng tiếc là nó trả về thuần string 
