@@ -2,7 +2,7 @@
 ![Exploit](image/image0.png)
 - Đầu tiên khi truy cập trang web và nó đã bị lỗi kết nối 
 ![Exploit](image/image11.png)
-- đầu tiên tôi thử dùng lệnh curl để kiếm tra kết nối http với các option :
+- tôi thử dùng lệnh curl để kiếm tra kết nối http với các option :
 + curl -I broken-website.tamuctf.cybr.club/
 // chỉ lấy header
 ![Exploit](image/image2.png)
