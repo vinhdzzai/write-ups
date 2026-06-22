@@ -11,6 +11,7 @@
 
 ### notes.ejs
 ![Exploit](images/image1.png)
+
 Dựa vào mã nguồn, phần `title` và `content` của note được render trực tiếp vào DOM mà không qua filter. Điều này dẫn đến lỗ hổng **Stored XSS**.
 
 * Kiểm chứng: Truyền payload `<script>alert(1);</script>` vào nội dung note, alert thành công.
@@ -18,6 +19,7 @@ Dựa vào mã nguồn, phần `title` và `content` của note được render 
 
 ### report.js
 ![Exploit](images/image3.png)
+
 Khi gửi yêu cầu POST một URL ở phần report, bot sẽ khởi chạy dưới dạng headless Chrome:
 
 1. Bot tự động đăng ký một tài khoản ngẫu nhiên.
