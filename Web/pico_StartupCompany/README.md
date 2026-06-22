@@ -15,7 +15,7 @@ WHERE username = '<username>';
 
 - ban đầu tôi nghĩ lab này là SQL blind vì ta có thể dump tên bảng dựa vào sqlite_master và brute-force ra tên cột cũng như là giá trị bên trong vì trong truy vấn có gọi đến username và password
 - nhưng vấn đề lớn là mỗi request cần 1 capcha random mới nên việc brute-force sẽ trở lên rất khó khăn
-- nhưng để ý kỹ ta có thể thấy giá trị ta donate được hiển thị lại tức là amount
+- nhưng để ý kỹ ta có thể thấy giá trị ta donate được hiển thị lại tức là amount - kể cả truyền vào 1 string nó cũng trả về string đó
 - lợi dụng điểm này ta có thể dùng nối chuỗi để nối lệnh SQL khiến nó trả ra thông tin cho phần amount
 - vì là nhập giá trị trên burpsuite nên ta cần dùng /**/ thay thế space để kh phá vỡ input
 - payload 1 : dump tên bảng
