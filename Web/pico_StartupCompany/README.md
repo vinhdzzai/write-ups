@@ -11,7 +11,7 @@ https://play.picoctf.org/practice/challenge/108?category=1&difficulty=2&page=4
 - trước hết dựa vào lỗi trả về tôi xác định được backend dùng truy vấn kiểu :
 UPDATE users 
 SET amount = '...' 
-WHERE username = '<username>' AND password = '<password>';
+WHERE username = '<username>';
 
 - ban đầu tôi nghĩ lab này là SQL blind vì ta có thể dump tên bảng dựa vào sqlite_master và brute-force ra tên cột cũng như là giá trị bên trong vì trong truy vấn có gọi đến username và password
 - nhưng vấn đề lớn là mỗi request cần 1 capcha random mới nên việc brute-force sẽ trở lên rất khó khăn
