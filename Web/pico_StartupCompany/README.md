@@ -21,7 +21,8 @@ WHERE username = '<username>';
 - payload 1 : dump tên bảng
  ` 
 '||(select/**/tbl_name/**/FROM/**/sqlite_master/**/WHERE/**/type='table')||'
-`
+ `
+- ta cần thoát dấu nháy để dùng || nếu không cả input sẽ được coi là 1 string bình thường
 ![Exploit](image/image4.png)
 - vậy là ta đã dump được tên bảng là startup_users
 - payload 2 : dump tên cột trong bảng qua sql
