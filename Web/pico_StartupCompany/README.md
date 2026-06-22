@@ -5,7 +5,7 @@ https://play.picoctf.org/practice/challenge/108?category=1&difficulty=2&page=4
 ![Exploit](image/image1.png)
 - bài đã hint get error, sqlite nên ta không vòng vo trực tiếp chèn kí tự khác thường để xem respone , tôi sẽ chèn thử dấu nháy ‘ và tất nhiên ta phải dùng burp suite để bypass client-side control
 ![Exploit](image/image2.png)
-- vậy là thực sự đoạn input này được đưa vào truy vấn (có cả username=’bob’) lúc này tôi thử dùng ordery by để xác định số cột trả về (‘ ORDER BY 1--)
+- vậy là thực sự đoạn input này được đưa vào truy vấn (có cả username=’bob’) lúc này tôi thử dùng order by để xác định số cột trả về (‘ ORDER BY 1--)
 ![Exploit](image/image3.png)
 - dựa vào lỗi trả về ta có thể thấy Lệnh UPDATE không hỗ trợ cấu trúc ORDER BY để dò cột như SELECT tuy vẫn có thể dùng nếu ta cấu hình đặc biệt nhưng dùng trong trường hợp này thì ORDER BY cũng kh thể exploit được như UNION SELECT vậy nên ta cần chuyển sang cách khai thác khác
 - trước hết dựa vào lỗi trả về tôi xác định được backend dùng truy vấn kiểu :
