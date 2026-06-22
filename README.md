@@ -1,2 +1,2 @@
 # write-ups
-I document write-ups for some labs I have completed by myself
+I write detailed write-ups for labs I completed myself.
