@@ -1,1 +1,1 @@
-The best write-up : **pico_XSS_noted**
+The best write-up : **/hard/pico_XSS_noted**
