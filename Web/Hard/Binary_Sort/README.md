@@ -45,7 +45,7 @@ name(carol) < name(user1)
 
 nên bài viết của tôi (`user1`) nằm sau `carol`.
 
-### Nếu ta đổi `column=name` thành `column=secret` thì sao?
+### Nếu ta đổi `column=name` thành `column=secret` thì sao (secret là 1 cột)?
 
 ```text
 /api/stories?column=secret&order=ASC
