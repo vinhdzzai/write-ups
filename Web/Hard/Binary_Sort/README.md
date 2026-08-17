@@ -6,6 +6,8 @@ Vì challenge này khá tốn công để tôi đọc source, phân tích luồn
 
 ![Exploit](image/image0.png)
 
+![Exploit](image/image1.png)
+
 1. **Flag nằm trong bài viết private của admin**
 2. Chỉ có những ai là **bạn thân của admin** mới có thể xem private (gồm `alice`, `carol`, `dave`)
 3. Ta không thể tự thêm vào list bạn thân của admin được, vậy nên để lấy được flag:
@@ -18,9 +20,6 @@ Password các user trong seed (có sẵn) được lưu với **16 ký tự ng�
 const secret = () => crypto.getRandomValues(new Uint8Array(8)).toHex();
 ```
 
-![Exploit](image/image1.png)
-
-- Ta có thể thấy lab đã cho thông tin của `bob`, người nằm trong danh sách bạn thân của `carol` (bạn thân của admin) mới nhìn tôi nghĩ đây có thể là entry point để khai thác nhưng sau khi ra được flag thì nó k thực sự quan trọng.
 
 ![Exploit](image/image2.png)
 
@@ -28,7 +27,7 @@ const secret = () => crypto.getRandomValues(new Uint8Array(8)).toHex();
 
 
 
-- Tôi tr đó đã tạo `user1`: `7ffff`
+- Tôi trước đó đã tạo `user1`: `7ffff`
 - Chú ý ở đây với:
 
 ```text
@@ -73,6 +72,7 @@ secret(user1) < secret(carol)
 ```
 
 - Đến đây đã khá thấy quen với thuật toán chia khoảng rồi đúng không.
+- Endpoint trả về danh sách story được sort theo secret. Vì vậy vị trí tương đối giữa story của carol và story của probe tiết lộ kết quả so sánh giữa secret(carol) và secret(probe)
 
 ---
 
