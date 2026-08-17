@@ -72,7 +72,7 @@ secret(user1) < secret(carol)
 ```
 
 - Đến đây đã khá thấy quen với thuật toán chia khoảng rồi đúng không.
-- Endpoint trả về danh sách story được sort theo secret. Vì vậy vị trí tương đối giữa story của carol và story của probe tiết lộ kết quả so sánh giữa secret(carol) và secret(probe)
+- Endpoint trả về danh sách story được sort theo secret. Vì vậy vị trí tương đối giữa story của carol và story của probe(ta tạo) tiết lộ kết quả so sánh giữa secret(carol) và secret(probe)
 
 ---
 
