@@ -27,7 +27,7 @@ const secret = () => crypto.getRandomValues(new Uint8Array(8)).toHex();
 
 
 
-- Tôi trước đó đã tạo `user1`: `7ffff`
+- Tôi trước đó đã tạo `user1`: `7fffffffffffffff`
 - Chú ý ở đây với:
 
 ```text
