@@ -15,7 +15,7 @@
 
 ## Reconnaissance
 
-Đăng nhập bằng tài khoản `kanie05` / `12345`. Giao diện hiển thị danh sách bài viết của các user khác, nhưng **không có nút đăng bài** cho user thường.
+Đăng kí bằng tài khoản `kanie05` / `12345`. Giao diện hiển thị danh sách bài viết của các user khác, nhưng **không có nút đăng bài** cho user thường.
 
 ![Trang chủ MDPress](images/img1.png)
 
