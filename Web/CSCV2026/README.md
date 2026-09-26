@@ -31,7 +31,9 @@ GET    /api/discussions/<id>      — xem bài cụ thể
 POST   /api/discussions           — đăng bài mới  ← chỉ admin
 PUT    /api/discussions/<id>      — sửa bài       ← chỉ admin
 DELETE /api/discussions/<id>      — xóa bài       ← chỉ admin
-POST   /api/discussions/<id>/compile-latex  — xuất PDF ← chỉ admin
+POST   /api/discussions/<id>/compile-latex  — xuất PDF
+
+' những endpoint đều phải test thì mới xác định endpoint nào chỉ có admin mới được phép '
 ```
 
 > **Lưu ý:** ID của mỗi bài viết được **hash MD5** từ số thứ tự (integer).
