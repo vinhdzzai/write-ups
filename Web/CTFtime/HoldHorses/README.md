@@ -30,14 +30,13 @@ Các thông tin ban đầu:
 
 -   Người chơi bắt đầu với **10 points**.
 -   Mỗi chặng đua có chiều dài **100 m**.
--   Có **16 con ngựa** để lựa chọn.
+-   Có **16 con ngựa** để lựa chọn được đánh index[0->15].
 -   Mỗi chặng có một con được chọn ngẫu nhiên làm **favorite**.
 -   Favorite có tốc độ gấp đôi các con ngựa còn lại và là con ngựa chiến
     thắng theo logic của challenge.
 -   Mỗi chặng có khoảng **30 giây chuẩn bị** để đặt cược, sau đó cuộc
     đua bắt đầu và kéo dài thêm hơn 30 giây.
 
-![Thông tin luật chơi và các con ngựa](images/img2.png)
 
 ### Vấn đề
 
@@ -126,6 +125,7 @@ xử lý dữ liệu cược.
 ------------------------------------------------------------------------
 
 ## Bước 1 --- Suy đoán favorite qua `/api/state`
+![Thông tin luật chơi và các con ngựa](images/img2.png)
 
 Vì favorite có tốc độ gấp đôi các ngựa còn lại, có thể suy đoán favorite
 bằng cách lấy hai response `/api/state` ở hai tick liên tiếp rồi tính
@@ -138,12 +138,11 @@ distance[i] = horses_t2[i] - horses_t1[i]
 Nếu tốc độ cơ bản nằm trong khoảng 0--3 và favorite có tốc độ gấp đôi,
 mức tăng của favorite có thể nổi bật hơn các con còn lại.
 
-Con có mức tăng quãng đường lớn bất thường so với các con khác là ứng
+Horse có mức tăng quãng đường lớn bất thường so với các con khác là ứng
 viên favorite.
 
 Cần lưu ý rằng một snapshot đơn lẻ không đủ để kết luận chắc chắn. Nên
-so sánh các response liên tiếp và đối chiếu với cách source code cập
-nhật tốc độ.
+so sánh các response cạnh nhau thêm 1 vài mức để chắc chắn hơn
 
 ------------------------------------------------------------------------
 
