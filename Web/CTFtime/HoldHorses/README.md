@@ -15,7 +15,6 @@ points** để đạt điều kiện nhận flag.
 Người chơi bắt đầu với 10 points và phải chọn đúng con ngựa chiến thắng
 qua từng chặng đua để tăng số điểm.
 
-
 ------------------------------------------------------------------------
 
 ## Reconnaissance
@@ -65,7 +64,6 @@ Endpoint này trả về trạng thái hiện tại của cuộc đua, bao gồm
 -   `user_points`: số points hiện có.
 -   `user_bet`: thông tin cược hiện tại.
 
-Ví dụ response:
 
 ``` json
 {
@@ -88,29 +86,14 @@ Ví dụ response:
 Phân tích source code cho thấy request đặt cược được xử lý qua
 middleware `betting_open` trước khi đến handler `bet()`.
 
+![Source code middleware betting_open](images/img4.png)
+
 Middleware kiểm tra timer:
 
-``` rust
-async fn betting_open(
-    State(state): State<SharedState>,
-    request: Request,
-    next: Next,
-) -> Result<Response, (StatusCode, String)> {
-    if state.read().await.timer >= 30 {
-        return Err((
-            StatusCode::BAD_REQUEST,
-            "Race already started".to_string()
-        ));
-    }
-
-    Ok(next.run(request).await)
-}
-```
 
 Nếu `timer >= 30`, middleware từ chối request. Ngược lại, request được
 chuyển tiếp bằng `next.run(request).await`.
 
-![Source code middleware betting_open](images/img4.png)
 
 Handler `bet()` nhận JSON từ request và xử lý việc đặt cược. Phần đáng
 chú ý:
@@ -120,7 +103,7 @@ Json(bet_request): Json<BetRequest>
 ```
 
 Axum sử dụng `Json<BetRequest>` để đọc body và deserialize JSON thành
-struct `BetRequest`.
+`BetRequest`.
 
 Sau khi kiểm tra số points và index của ngựa, handler cập nhật trạng
 thái:
@@ -133,39 +116,34 @@ state.user_points -= bet_request.amount;
 ![Source code handler bet](images/img5.png)
 
 **Điểm yếu:** handler kiểm tra số points và ngựa được chọn nhưng không
-kiểm tra lại `timer >= 30` trong vùng đang giữ write lock.
+kiểm tra lại `timer >= 30`.
 
-Như vậy, việc kiểm tra thời gian chỉ được thực hiện ở middleware. Có một
-khoảng thời gian giữa lúc middleware kiểm tra timer và lúc handler thực
-sự xử lý dữ liệu đặt cược.
+Như vậy, việc kiểm tra thời gian chỉ được thực hiện ở middleware. Nếu
+middleware chuyển tiếp request trước khi body được đọc hoàn tất, có thể
+tồn tại khoảng thời gian giữa lúc kiểm tra timer và lúc handler thực sự
+xử lý dữ liệu cược.
 
 ------------------------------------------------------------------------
 
-## Bước 1 --- Thử suy đoán favorite qua `/api/state`
+## Bước 1 --- Suy đoán favorite qua `/api/state`
 
 Vì favorite có tốc độ gấp đôi các ngựa còn lại, có thể suy đoán favorite
 bằng cách lấy hai response `/api/state` ở hai tick liên tiếp rồi tính
 mức tăng quãng đường của từng con:
 
 ``` text
-delta[i] = horses_t2[i] - horses_t1[i]
+distance[i] = horses_t2[i] - horses_t1[i]
 ```
 
-Nếu tốc độ cơ bản nằm trong khoảng 0--3, favorite có tốc độ gấp đôi, tức
-mức tăng có thể nằm trong khoảng 0--6 trong một tick (tùy cách game cập
-nhật tốc độ).
+Nếu tốc độ cơ bản nằm trong khoảng 0--3 và favorite có tốc độ gấp đôi,
+mức tăng của favorite có thể nổi bật hơn các con còn lại.
 
-Con có mức tăng nổi bật so với các con còn lại là ứng viên favorite.
+Con có mức tăng quãng đường lớn bất thường so với các con khác là ứng
+viên favorite.
 
-**Hạn chế:**
-
--   Chỉ có thể quan sát tốc độ sau khi cuộc đua bắt đầu.
--   Một mẫu đo đơn lẻ có thể chưa đủ để kết luận nếu tốc độ cơ bản được
-    random theo từng tick.
--   Cần lấy nhiều mẫu liên tiếp để so sánh ổn định hơn.
-
-Do đó, cách này giúp nhận diện favorite nhưng không giải quyết được vấn
-đề đặt cược trước khi cuộc đua bắt đầu.
+Cần lưu ý rằng một snapshot đơn lẻ không đủ để kết luận chắc chắn. Nên
+so sánh các response liên tiếp và đối chiếu với cách source code cập
+nhật tốc độ.
 
 ------------------------------------------------------------------------
 
@@ -188,79 +166,94 @@ Ok(next.run(request).await)
 ```
 
 Điểm quan trọng là HTTP request có thể được xử lý theo luồng dữ liệu:
-headers được nhận và parse trước, còn body có thể tiếp tục đến sau.
+headers được nhận và phân tích trước, còn body có thể tiếp tục đến sau.
 
 Middleware có thể chuyển tiếp request khi body chưa được đọc hết. Sau
 đó, `Json<BetRequest>` trong handler sẽ đọc body. Nếu body chưa đến đủ,
-extractor sẽ chờ dữ liệu tiếp theo.
+quá trình đọc body có thể phải chờ dữ liệu tiếp theo.
 
-Khi body đến, request tiếp tục ở handler đang chờ đọc body; nó **không
-quay lại chạy middleware `betting_open` từ đầu**.
+Khi body đến, request tiếp tục được xử lý tại handler đang chờ đọc body;
+nó **không quay lại chạy middleware `betting_open` từ đầu**.
 
 ### Kịch bản khai thác
 
-Có thể chia việc gửi request thành hai phần:
+Ý tưởng khai thác là tạo một HTTP request đặt cược nhưng cố tình chưa
+gửi body. Nhờ đó, request có thể vượt qua middleware `betting_open`
+trong thời gian chuẩn bị, sau đó giữ handler ở trạng thái chờ dữ liệu
+cược.
 
-1.  Gửi request line và headers, chưa gửi body.
-2.  Đợi đến khi cuộc đua bắt đầu, xác định favorite qua `/api/state`,
-    rồi gửi phần body chứa lựa chọn ngựa và số points cược.
+Quá trình khai thác diễn ra theo trình tự sau:
 
-Ví dụ phần headers được gửi trước:
+#### Bước 1: Gửi HTTP headers trước, chưa gửi body
+
+Client mở kết nối TCP đến server và gửi phần request line cùng headers:
 
 ``` http
 POST /api/bet HTTP/1.1
 Host: 10.83.21.42
-Content-Length: 22
-Accept-Language: en-US,en;q=0.9
-User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36
 Content-Type: application/json
-Accept: */*
-Origin: http://10.83.21.42
-Referer: http://10.83.21.42/
-Accept-Encoding: gzip, deflate, br
+Content-Length: 64
 Connection: keep-alive
 ```
 
-Khi headers đến server:
+Lúc này, client chưa gửi JSON body nhưng đã khai báo
+`Content-Length: 64`, cho server biết request còn có phần body dài 64
+byte cần đọc.
 
--   Middleware kiểm tra `timer`.
--   Nếu timer vẫn nhỏ hơn 30, request được chuyển tiếp.
--   Handler bắt đầu xử lý nhưng `Json<BetRequest>` chưa thể deserialize
-    nếu body chưa đến đủ.
+#### Bước 2: Request vượt qua middleware và handler chờ body
 
-Sau khi cuộc đua bắt đầu, gọi `/api/state` để quan sát các con ngựa. So
-sánh các response liên tiếp để tìm favorite.
+Server nhận headers và bắt đầu xử lý request:
 
-Khi đã xác định được favorite, gửi body của **chính request đang chờ**:
+-   Middleware `betting_open` kiểm tra `timer`.
+-   Vì request được gửi trong thời gian chuẩn bị (`timer < 30`),
+    middleware cho phép request đi tiếp bằng `next.run(request).await`.
+-   Handler `bet()` bắt đầu xử lý request. Tuy nhiên, dữ liệu JSON chưa
+    được gửi nên extractor `Json<BetRequest>` chưa thể hoàn thành việc
+    đọc và deserialize body.
+
+Lúc này, request đã vượt qua bước kiểm tra của middleware nhưng vẫn chưa
+hoàn tất việc xử lý tại handler. Client giữ kết nối và chưa gửi body.
+
+#### Bước 3: Cuộc đua bắt đầu trong khi handler vẫn chờ dữ liệu
+
+Khi timer đạt 30 giây, cuộc đua bắt đầu.
+
+Thông thường, nếu gửi một request đặt cược mới ở thời điểm này,
+middleware sẽ từ chối vì `timer >= 30`. Tuy nhiên, request đã gửi ở bước
+1 không phải thực hiện lại bước kiểm tra middleware.
+
+Trong khi handler vẫn chờ body, client sử dụng một kết nối khác để liên
+tục gọi `GET /api/state`, lấy vị trí hiện tại của 16 con ngựa.
+
+Bằng cách so sánh hai response ở hai tick liên tiếp, client tính mức
+tăng quãng đường của từng con để xác định favorite.
+
+#### Bước 4: Gửi body của request đang chờ
+
+Sau khi xác định được favorite, client gửi JSON body qua chính kết nối
+TCP đã mở ở bước 1:
 
 ``` json
-{"horse": <favorite_horse>, "amount": 10}
+{"horse": 2, "amount": 10}
 ```
 
-Lưu ý: `horse` trong backend là index từ `0` đến `15`. Nếu giao diện
-đánh số từ `1` đến `16`, cần chuyển số thứ tự hiển thị sang index tương
-ứng trước khi gửi.
+Server tiếp tục đọc body mà handler đang chờ. Axum deserialize JSON
+thành `BetRequest`, sau đó handler `bet()` xử lý thông tin cược.
 
-### Vì sao có thể xảy ra?
+Điểm quan trọng là request này đã vượt qua middleware từ trước. Việc gửi
+body sau khi cuộc đua bắt đầu không khiến request quay lại thực hiện
+middleware `betting_open`.
 
-Đây là lỗi **TOCTOU (Time-of-check to Time-of-use)**:
+Do đó, nếu handler không kiểm tra lại timer, dữ liệu cược vẫn có thể
+được xử lý dù thời gian đặt cược đã kết thúc.
 
--   **Time of check:** middleware kiểm tra `timer < 30`.
--   **Time of use:** handler xử lý dữ liệu đặt cược sau đó.
--   Trạng thái `timer` có thể thay đổi trong khoảng thời gian giữa hai
-    bước.
 
-Do handler không kiểm tra lại timer khi cập nhật `user_bet`, request đã
-vượt qua middleware trước đó vẫn có thể được xử lý sau khi cuộc đua bắt
-đầu.
+Vì vậy, client có thể gửi headers trước rồi trì hoãn body mà vẫn duy trì
+một HTTP request duy nhất.
 
-**Lưu ý kỹ thuật:** TCP truyền dữ liệu dưới dạng byte stream; không đảm
-bảo mỗi lần `send()` tương ứng với một TCP packet riêng. Việc chia
-request thành headers và body là cách điều khiển thời điểm gửi dữ liệu ở
-phía client. Khả năng khai thác thực tế còn phụ thuộc vào cách
-Axum/Hyper nhận và xử lý streaming body, cấu hình timeout/limit và thứ
-tự middleware-extractor của ứng dụng.
-
+**Điều kiện quan trọng để khai thác thành công:** middleware phải chuyển
+tiếp request trước khi body được đọc hoàn tất, đồng thời handler không
+kiểm tra lại thời gian đặt cược. 
 
 ------------------------------------------------------------------------
 
@@ -285,23 +278,3 @@ Tiếp tục cho đến khi đạt điều kiện **500 points**.
 ``` text
 PP{h0ld_y0ur_byt3s_n0t_y0ur_h0rs3s::GNhN3KNj5he2}
 ```
-
-------------------------------------------------------------------------
-
-## Tổng kết
-
-Challenge khai thác sự khác biệt giữa thời điểm middleware kiểm tra điều
-kiện đặt cược và thời điểm handler thực sự sử dụng dữ liệu request.
-
-Nguyên nhân cốt lõi là:
-
--   Middleware kiểm tra `timer < 30` nhưng không giữ lock xuyên suốt quá
-    trình xử lý request.
--   Body của HTTP request có thể được gửi đến sau headers.
--   Handler `bet()` không kiểm tra lại timer khi cập nhật trạng thái
-    cược.
-
-**Hướng khắc phục:** thực hiện kiểm tra timer, kiểm tra số points và cập
-nhật cược trong cùng một vùng write lock ở handler. Không nên chỉ dựa
-vào middleware để đảm bảo điều kiện nghiệp vụ cần được duy trì tại thời
-điểm cập nhật trạng thái.
