@@ -83,8 +83,6 @@ Ví dụ response:
 }
 ```
 
-![Response của endpoint api state](images/img4.png)
-
 ### Endpoint đặt cược
 
 Phân tích source code cho thấy request đặt cược được xử lý qua
@@ -263,7 +261,6 @@ phía client. Khả năng khai thác thực tế còn phụ thuộc vào cách
 Axum/Hyper nhận và xử lý streaming body, cấu hình timeout/limit và thứ
 tự middleware-extractor của ứng dụng.
 
-![Khai thác bằng cách gửi headers trước và body sau](images/img5.png)
 
 ------------------------------------------------------------------------
 
