@@ -1,4 +1,4 @@
-# CTF Writeup 11/15/2026
+# CTF Writeup 15/11/2026
 
 **Category:** Web  
 **Flag:** `d4rk{k4ich0_l0v3s_Sh1n0miy4}`
