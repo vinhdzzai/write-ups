@@ -21,17 +21,17 @@ Website có các endpoint chính:
 
 - `/home`: trang chủ.
 - `/shop`: hiển thị các đơn hàng.
-
-![Trang giỏ hàng](images/img1.png)
-  
 - `/cart`: hiển thị các đơn hàng đã thêm vào giỏ, có nút đặt hàng (`Place Order`).
+
+![Trang giỏ hàng](image/img1.png)
+
 - `/my-orders`: hiển thị thông tin các đơn hàng đã đặt.
 
- ![Trang my-orders](images/img2.png)
+ ![Trang my-orders](image/img2.png)
   
 - `/track`: theo dõi đơn hàng dựa trên `username` và `id_order`.
 
- ![Trang track](images/img3.png)
+ ![Trang track](image/img3.png)
 
 - `/login` và `/register`: đăng nhập và đăng ký tài khoản.
 
@@ -45,7 +45,7 @@ Fuzzing endpoint và kiểm tra `/robots.txt`, tôi tìm thấy hai đường d�
 
 Endpoint `/mantenance` chứa thông tin `username` và `id_order` của nhân viên nội bộ, trong đó có tài khoản `kancho`.
 
-![Thông tin tại mantenance](images/img4.png)
+![Thông tin tại mantenance](image/img5.png)
 
 Endpoint `/internal-staff` chứa `SECRET_KEY`:
 
@@ -53,7 +53,7 @@ Endpoint `/internal-staff` chứa `SECRET_KEY`:
 love_is_war
 ```
 
-![SECRET_KEY tại internal-staff](images/img5.png)
+![SECRET_KEY tại internal-staff](image/img4.png)
 
 ---
 
@@ -71,13 +71,13 @@ Sau khi kiểm tra các endpoint vừa tìm được, hướng khai thác chuy�
 
 Từ thông tin tại `/mantenance`, tôi sử dụng `username` và `id_order` để tìm đơn hàng của `kancho`.
 
-![Tìm đơn hàng của kancho](images/img6.png)
+![Tìm đơn hàng của kancho](image/img6.png)
 
 Kết quả cho thấy `user_id` của `kancho` là `66066`.
 
 Tuy nhiên, khi nhấn tải đơn hàng dưới dạng PDF, website thông báo thông tin xác thực không khớp với đơn hàng.
 
-![Lỗi xác thực khi tải PDF](images/img7.png)
+![Lỗi xác thực khi tải PDF](image/img7.png)
 
 ---
 
@@ -85,27 +85,27 @@ Tuy nhiên, khi nhấn tải đơn hàng dưới dạng PDF, website thông báo
 
 ### Nhận diện session cookie
 
-Từ endpoint `/mantenance`, tôi nhớ lại website còn để lộ `SECRET_KEY`. Sau khi kiểm tra cookie, tôi nhận thấy giá trị cookie có dạng phù hợp với JWT hoặc Flask session.
+Từ endpoint `/mantenance`, tôi nhớ lại website còn để lộ `SECRET_KEY`. Sau khi kiểm tra cookie, tôi nhận thấy giá trị cookie có dạng phù hợp với JWT hoặc Flask session
+
+![Cookie của ứng dụng](image/img8.png)
 
 Tôi thử decode theo định dạng JWT nhưng không thu được header JWT. Vì vậy, tôi chuyển hướng kiểm tra khả năng đây là Flask session cookie.
-
-![Cookie của ứng dụng](images/img8.png)
 
 ### Decode Flask session
 
 Sử dụng công cụ decode Flask session, tôi giải mã được nội dung session.
 
-![Nội dung Flask session sau khi decode](images/img9.png)
+![Nội dung Flask session sau khi decode](image/img9.png)
 
 ### Tạo lại session của kancho
 
 Vì đã có `SECRET_KEY` là `love_is_war`, tôi sử dụng key này để tạo lại session với thông tin `username` và `id` của `kancho`.
 
-![Tạo session với thông tin của kancho](images/img10.png)
+![Tạo session với thông tin của kancho](image/img10.png)
 
 Sau đó, thay cookie session hiện tại bằng session vừa tạo và thực hiện tải lại file PDF của đơn hàng.
 
-![Tải và đọc PDF đơn hàng](images/img11.png)
+![Tải và đọc PDF đơn hàng](image/img11.png)
 
 ---
 
